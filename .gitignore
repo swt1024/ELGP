@@ -1,0 +1,27 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# 忽略所有 压缩文件
+*.zip
+*.gz
+*.rar
+
+# 忽略所有 数据文件
+*.txt
+*.bed
+*.csv
+*.gtf
+*.bigbed
+*.fasta
+*.svg
+
+# 忽略以下文件夹
+PDF/
+data/
+omics/
+protein/
+results/
+.vscode/
+.idea/
+Model/HGVAE/
