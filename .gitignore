@@ -6,6 +6,7 @@
 *.zip
 *.gz
 *.rar
+*.7z
 
 # 忽略所有 数据文件
 *.txt
@@ -24,4 +25,3 @@ protein/
 results/
 .vscode/
 .idea/
-Model/HGVAE/
