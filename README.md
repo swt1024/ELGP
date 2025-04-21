@@ -8,7 +8,7 @@ In this work, we proposed a framework to identify essential lncRNAs by taking ad
 
 Some of the data in the `data` folder has been preprocessed. For more details, please refer to the *Preprocessing* section. For some datasets that require substantial memory, only download links are provided.
 
-#### Benchmarking
+#### 1.1.1 Benchmarking
 
 - `esslnc.csv`: Essential lncRNA gene data downloaded from the dbEssLnc2.0 database.
 
@@ -22,12 +22,12 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 - `ess_lpi.csv`: Mouse essential lncRNA genes identified from the LPI network.
 - `noness_lpi.csv`: Selected mouse non-essential lncRNA genes from the LPI network.
 
-#### LncBook_LPI
+#### 1.1.2 LncBook_LPI
 
 - [lncrna_rbp_LncBook2.0.csv.gz](https://ngdc.cncb.ac.cn/lncbook/files/lncrna_rbp_LncBook2.0.csv.gz): Raw human LPI data downloaded from the LncBook 2.0 database.  
 - `LncBook_LPI.csv`: Processed human LPI data derived from the LncBook 2.0 database.
 
-#### NPInter_LPI
+#### 1.1.3 NPInter_LPI
 
 - [lncRNA_interaction.txt.gz](http://bigdata.ibp.ac.cn/npinter5/download/file/lncRNA_interaction.txt.gz): Raw LPI dat download from the NPInterv5.0 database. 
 
@@ -39,7 +39,7 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 - `NPInter_LPI.csv`: Filtered mouse LPI data.
 - `correct_NPInter_LPI.csv`: Corrected mouse LPI data.
 
-#### LPI
+#### 1.1.4 LPI
 
 **human**
 - `LPI.csv`: Merged and deduplicated human LPI data from the LncBook and NPInter databases.
@@ -51,7 +51,7 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 - `lncRNA.csv`: lncRNA nodes in the mouse LPI network.
 - `protein.csv`: Protein nodes in the mouse LPI network.
 
-#### PPI
+#### 1.1.5 PPI
 
 **human**
 - `BIOGRID-Homo_sapiens-4.4.241.tab3.txt`: Human PPI data from the BIOGRID database, which  were obtained from the [BIOGRID-ORGANISM-4.4.241.tab3.zip](https://downloads.thebiogrid.org/File/BioGRID/Release-Archive/BIOGRID-4.4.241/BIOGRID-ORGANISM-4.4.241.tab3.zip).
@@ -63,7 +63,7 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 - `PPI.csv`: Filtered mouse PPI data.
 - `protein_in_ppi.csv`: Proteins involved in the mouse PPI data.
 
-#### LPPI
+#### 1.1.6 LPPI
 
 **human**
 - `LPPI.csv`: Human LPPI data obtained by merging LPI and PPI networks.
@@ -75,7 +75,7 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 - `LPPI_updated.csv`: Mouse LPPI data after correcting invalid protein names.
 - `protein_updated.csv`: Protein nodes in the corrected mouse LPPI network.
 
-#### reference_lncRNA
+#### 1.1.7 reference_lncRNA
 
 **human**
 **`gtf`**
@@ -133,7 +133,7 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 - `get_trans_ensembl.py`: Script to process GTF files from Ensembl, generating mappings between lncRNA genes and transcripts for various versions.
 - `ensembl`: Folder that stores mappings between genes and transcripts for various versions.
 
-#### Sequence
+#### 1.1.8 Sequence
 - [GRCh38.p14.genome.fa](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_47/GRCh38.p14.genome.fa.gz): Human reference genome sequence file for the GRCh38.p14 release.  
 - [GRCm38.p6.genome.fa](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/GRCm38.p6.genome.fa.gz): Mouse genome sequence file for the GRCm38.p6 release.  
 - `process_fasta.py`: Script for preprocessing fasta files.
@@ -152,7 +152,7 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 - [Homo_sapiens.GRCh38.108.ncrna.fa](https://ftp.ensembl.org/pub/release-108/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa.gz)
 - [Homo_sapiens.GRCh38.107.ncrna.fa](https://ftp.ensembl.org/pub/release-107/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa.gz)
 - [Homo_sapiens.GRCh38.106.ncrna.fa](https://ftp.ensembl.org/pub/release-106/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa.gz)
-- [sapiens.GRCh38.104.ncrna.fa](https://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa.gz)
+- [Homo_sapiens.GRCh38.104.ncrna.fa](https://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa.gz)
 - [Homo_sapiens.GRCh38.97.ncrna.fa](https://ftp.ensembl.org/pub/release-97/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa.gz)
 - [Homo_sapiens.GRCh38.93.ncrna.fa](https://ftp.ensembl.org/pub/release-93/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa.gz)
 - [Homo_sapiens.GRCh38.87.ncrna.fa](https://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa.gz)
@@ -188,7 +188,7 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 - `getCoordination.py`: Script to retrieve gene coordinates from BED files in the `data/reference_lncRNA/human/bed` folder. Genes without corresponding genomic coordinates are recorded in the `lnc_no_pos.csv` file.
 - `match_lncRNA.sh`: Uses bedtools to identify lncRNA genes with exactly overlapping genomic coordinates. Pairs of completely overlapping lncRNA genes are stored in the `mapped_lncRNA.txt` file.
 - `merge_all.py`: Merges and deduplicates LPI data from LncBook and NPInter.
-- `correct_inter.py`: 修正LPI数据中错误的蛋白质编码基因名称，错误的组织或细胞系名称，替换LPI数据中的转录本ID为对应的基因ID。
+- `correct_inter.py`: Corrected erroneous protein-coding gene names, incorrect tissue or cell line names, and replaced transcript IDs with their corresponding gene IDs in the LPI data.
 
 #### LPI_Mouse
 
