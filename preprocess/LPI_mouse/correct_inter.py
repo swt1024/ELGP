@@ -21,26 +21,6 @@ inter.loc[(inter['gene_id'] == '-') & (inter['symbol'].str.startswith('ENSMUSG')
 
 inter.loc[(inter['tarName'] == '-'), 'tarName' ] = inter['tarID']
 
-## Load the CSV file that contains the mapping of incorrect to correct proteins
-#protein_mapping_path = 'right_protein.csv'  # Replace with the actual file path
-#protein_mapping = pd.read_csv(protein_mapping_path, header=None, names=['wrong', 'correct'])
-#invalid_protein = pd.read_csv('exact_invalid_protein.csv', header=None, names=['protein'])
-
-## Create a dictionary mapping from incorrect names to correct names
-#protein_dict = dict(zip(protein_mapping['wrong'], protein_mapping['correct']))
-
-## Replace incorrect proteins in the 'tarName' column using the dictionary
-#inter['tarName'] = inter['tarName'].replace(protein_dict)
-#inter = inter[~inter['tarName'].isin(invalid_protein['protein'])]
-#print("Correct invalid protein names")
-
-#pro_columns = ['protein_ID', 'tarName']
-#protein = inter[pro_columns].drop_duplicates()
-#protein.columns = ['protein_ID', 'protein']
-
-## Save the protein
-#protein.to_csv("../../data/LPI/mouse/protein.csv", index=False)
-
 # Save the modified CSV file
 inter = inter[['gene_id', 'symbol', 'tarName']]
 inter.to_csv("../../data/NPInter_LPI/mouse/correct_NPInter_LPI.csv", index=False)

@@ -184,21 +184,66 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 
 #### LPI_human
 - `pro_lncbook.sh`: Script to filter LPI data from LncBook, retaining only interactions between lncRNA genes and proteins.
-- `pro_NPInter.sh`: Script to filter LPI data from NPInter, retaining only interactions found in humans where both interacting molecules are categorized as 'lncRNA' and 'protein', and the interaction calss is 'binding'.
-- `getCoordination.py`: Script to retrieve gene coordinates from BED files in the `data/reference_lncRNA/human/bed` folder. Genes without corresponding genomic coordinates are recorded in the `lnc_no_pos.csv` file.
+- `pro_NPInter.sh`: Script to filter LPI data from NPInter, retaining only interactions found in humans where both interacting molecules are categorized as 'lncRNA' and 'protein', and the interaction class is 'binding'.
+- `getCoordination.py`: Script to retrieve gene coordinates from BED files in the `data/reference_lncRNA/human/bed` folder. Coordinates for lncRNA genes from NPInter's LPI data are stored in `npinter_lnc_0based.bed`, and those from LncBook's LPI data are in `lncbook_lnc_0based.bed`. Genes without corresponding genomic coordinates are recorded in the `lnc_no_pos.csv` file.
 - `match_lncRNA.sh`: Uses bedtools to identify lncRNA genes with exactly overlapping genomic coordinates. Pairs of completely overlapping lncRNA genes are stored in the `mapped_lncRNA.txt` file.
 - `merge_all.py`: Merges and deduplicates LPI data from LncBook and NPInter.
-- `correct_inter.py`: Corrected erroneous protein-coding gene names, incorrect tissue or cell line names, and replaced transcript IDs with their corresponding gene IDs in the LPI data.
+- `correct_inter.py`: Corrects erroneous protein-coding gene names, incorrect tissue or cell line names, and replaces transcript IDs with their corresponding gene IDs in the LPI data. The `correct_cell_line.csv` file contains the cell line names that need corrections; the `right_protein.csv` file stores the correct names of the protein-coding genes that need corrections.
 
 #### LPI_Mouse
+- `pro_NPInter.sh`: Script to filter LPI data from NPInter, retaining only interactions found in mouse where both interacting molecules are categorized as 'lncRNA' and 'protein', and the interaction class is 'binding'.
+- `getLPI.py`: Script to retrieve gene coordinates from BED files in the `data/reference_lncRNA/human/bed` folder and assigns unique node IDs to each node in the network. Genes without corresponding genomic coordinates are recorded in the `lnc_no_pos.csv` file.
+- `correct_inter.py`: Script to replace transcript IDs with their corresponding gene IDs in the LPI data.
 
 #### LPPI
+- `getPPI.py`: Script to extract PPI (Protein-Protein Interaction) data for the specific species from the original BIOGRID database.
+- `getLPPI.py`: Script to merge LPI (LncRNA-Protein Interaction) data with PPI data, assigning node IDs to protein nodes within the LPPI network.
+- `correct_mouse_protein.py`: Script to correct the gene names of protein-coding genes in the mouse LPPI data. The `right_protein.csv` file stores the mouse LPPI data's protein-coding genes that need correction along with their correct names.
+
 
 #### benchMarking_human
+- `get_trans.py`: Script to retrieve transcripts for each lncRNA gene in the LPPI network. lncRNA genes without transcript information are logged in the `no_trans.csv` file.
+- `get_seq.py`: Script to fetch sequence information for the transcripts.
+- `cal_MFE.sh`: Uses RNAFold to calculate the minimum free energy (MFE) for the transcripts.
+- `cal_GIC.py`: Calculates the GIC (Gene Interaction Consistency) scores for lncRNA genes in the LPPI network and outputs them in ascending order to `sorted_GIC_score.csv`.
+- `get_ess.py`: Retrieves essentiality data for human lncRNA genes from the dbEssLnc2.0 database and maps them to the LPPI network, identifying essential lncRNA gene nodes.
+- `get_noness.py`: Selects a negative sample set from the top of the descending GIC score list, consisting of samples without essentiality annotations, matching the number of essential lncRNA nodes.
 
 #### benchMarking_Mouse
+- `get_trans.py`: Script to retrieve transcripts for each lncRNA gene in the LPPI network. lncRNA genes without transcript information are logged in the `no_trans.csv` file.
+- `get_seq.py`: Script to fetch sequence information for the transcripts.
+- `cal_MFE.sh`: Uses RNAFold to calculate the minimum free energy (MFE) for the transcripts.
+- `cal_GIC.py`: Calculates the GIC (Gene Interaction Consistency) scores for lncRNA genes in the LPPI network and outputs them in ascending order to `sorted_GIC_score.csv`.
+- `get_ess.py`: Retrieves essentiality data for human lncRNA genes from the dbEssLnc2.0 database and maps them to the LPPI network, identifying essential lncRNA gene nodes.
+- `get_noness.py`: Selects a negative sample set from the top of the descending GIC score list, consisting of samples without essentiality annotations, matching the number of essential lncRNA nodes.
 
-### 1.3 annotate 
+
+### 1.3 omics
+
+#### conservation
+**human**
+- `download.sh`: Script to download the GRCh38 versions of phyloP100way scores and phastCons100way scores from UCSC.
+
+
+**mouse**
+- `download.sh`: Script to download the GRCm38 versions of phyloP60way scores and phastCons60way scores from UCSC.
+
+#### ENCODE_annotation
+- `download.py`: Script to download epigenomic feature data for multiple tissues of humans and mice from ENCODE. Detailed descriptions of the specific features can be found in Supplemental File 1 of the paper.
+
+#### protein
+**human**
+- `download.sh`: Script to download and decompress data related to pLI scores from gnomAD, used for annotating protein nodes in the human LPPI network.
+
+
+**mouse**
+- `[MRK_List1.rpt](https://www.informatics.jax.org/downloads/reports/MRK_List1.rpt.gz)`: Mouse gene information downloaded from the MGI database.
+- `[mgi.gaf](https://current.geneontology.org/annotations/mgi.gaf.gz)`: Mouse gene GO Term data downloaded from the MGI database.
+- `MGI_filter_mapping.csv`: Contains the names of mouse gene expression files to be downloaded from the MGI database and the corresponding filter criteria. The downloaded expression files are stored in the `MGI_exp` folder.
+- `pre.ipynb`: Notebook for preprocessing raw data to generate `filtered_exp.csv` and `MGI_ID_mapping.csv`, which are used for feature annotation of protein nodes in the mouse LPPI network.
+
+
+### 1.4 annotate 
 
 **human**
 - lncRNA_feature_annotate.ipynb: Annotating features for lncRNA nodes in the heterogeneous graph.
@@ -208,32 +253,61 @@ Some of the data in the `data` folder has been preprocessed. For more details, p
 - lncRNA_feature_annotate.ipynb: Annotating features for lncRNA nodes in the heterogeneous graph.
 - protein_feature_annotate.ipynb:Annotating features for protein nodes in the heterogeneous graph.
 
-### 1.4 HinSAGE
+### 1.5 HinSAGE
 
-- train.py:Training the HinSAGE model and generating node representations for lncRNA gene nodes
+- tune.py: Iterates over different parameters, trains the HinSAGE model, and generates node representations to select the optimal parameters (size of hidden layers and number of neighbor nodes sampled).
+- train.py: Uses the optimal parameters to train the HinSAGE model and generate node representations for lncRNA gene nodes.
 
-### 1.5 classifier
+### 1.6 classifier
 
 **SVM**
-- svm.ipynb: Code for testing HinSAGE parameters, tuning SVM parameters, performing cross-validation, and making predictions.
+- svm.ipynb: Code for testing HinSAGE parameters, tuning SVM parameters, performing cross-validation, and making predictions.The model's prediction results for the corresponding species are stored in the appropriate folder within ELGP/results.
 
 **MLP**
-- mlp.ipynb: Code for tuning MLP parameters, performing cross-validation, and making predictions.
+- mlp.ipynb: Code for tuning MLP parameters, performing cross-validation, and making predictions.The model's prediction results for the corresponding species are stored in the appropriate folder within ELGP/results.
 
-## 2. How to use ELGP
+### 1.7 experiment
+#### performance
+- `plot.ipynb`: Notebook used to plot performance comparison charts for models, as well as ROC AUC and PR AUC curves. The classification performance metrics for different models on humans and mice are stored in `human_compare_metrics.csv` and `mouse_compare_metrics.csv`, respectively.
+
+
+#### permutation_test
+- `shuffle.py`: Script to shuffle the labels of the benchmark datasets for humans and mice 1000 times.
+- `svm.py`: Script to train a Support Vector Machine (SVM) on 1000 datasets with shuffled labels for both humans and mice, recording the results of cross-validation.
+- `mlp.py`: Script to train a Multi-Layer Perceptron (MLP) on 1000 datasets with shuffled labels for both humans and mice, recording the results of cross-validation.
+- `permutation_test.py`: Script to compare the performance of models on the original benchmark datasets against their performance on the perturbed datasets and to calculate the p-value.
+
+
+#### enrichment_analysis
+- `cal_ES.py`: Script that utilizes scoring results from various models in the `ELGP/results` folder to perform essential gene enrichment analysis. It stores the analysis results and generates plots of the ES (enrichment score) curves along with pseudo-gel visualization charts.
+
+
+#### ess_number
+- `get_overlap.sh`: Script that uses bedtools to identify genes with at least 50% overlap.
+- `deduplication.ipynb`: Jupyter notebook used to deduplicate the predicted results from ELGP, yielding a list of essential lncRNA genes for humans and mice that have been deduplicated based on tissue. It also generates a union of predicted essential lncRNA genes across various tissues in humans and mice.
+- `plt.ipynb`: Notebook for plotting the intersection matrices of predicted essential lncRNA genes in each tissue for both humans and mice.
+
+
+#### function_analysis
+- `Go_term.ipynb`: Jupyter notebook used to extract symbols of predicted essential lncRNA genes and all lncRNA gene symbols from the LPPI network for functional analysis via DAVID. The results of the DAVID analysis are stored in `chart_human.txt` and `chart_mouse.txt` files. Bar charts depicting functional enrichment of essential lncRNA genes in humans and mice are generated based on these files.
+
+
+## 2. Computational prediction of essential lncRNA genes in human and mouse
 The following steps take human as an example.
 
 ### 2.1 Construct lncRNA-protein-protein heterogeneous network
 
 Step1: Users can run `idmap.py`, input `LPI.csv`  , output `id_lncRNA.txt`, `id_protein.txt` and `id_lncRNA_protein.txt`.
 
-### 2.2 Heterogeneous representation learning
+### 2.2 Annotate node features
+
+### 2.3 Heterogeneous representation learning
 
 Step1:  Users can run `./HinSAGE/train.py` to generate the node representation for lncRNA gene nodes , e.g. `lncRNA_embeddings_heart`. 
 
-### 2.3 Select optimal non-essential lncRNAs
+### 2.4 Select optimal non-essential lncRNAs
 
-### 2.4 Supervised machine learning
+### 2.5 Supervised machine learning
 
 #### 2.4.1 SVM model
 

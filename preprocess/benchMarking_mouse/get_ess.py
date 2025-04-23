@@ -1,6 +1,13 @@
 import pandas as pd
 
-ess_lnc = pd.read_csv("../../data/benchMarking/mouse/esslnc.csv")
+ess_lnc = pd.read_csv("../../data/benchMarking/esslnc.csv")
+
+ess_lnc = ess_lnc[ess_lnc['Organism'] == 'Mouse']
+
+ess_lnc = ess_lnc[['Noncode_id','Lncbook_id','lib_id','gene_name','ensembl_id']]
+
+ess_lnc.to_csv("../../data/benchMarking/mouse/esslnc.csv", index=False)
+
 lncRNA = pd.read_csv("../../data/LPI/mouse/lncRNA.csv")
 
 ess_lnc['Noncode_id'] = ess_lnc['Noncode_id'].str.split('.').str[0]
