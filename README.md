@@ -303,7 +303,7 @@ Step1: Users can run `idmap.py`, input `LPI.csv`  , output `id_lncRNA.txt`, `id_
 
 ### 2.3 Heterogeneous representation learning
 
-Step1:  Users can run `./HinSAGE/train.py` to generate the node representation for lncRNA gene nodes , e.g. `lncRNA_embeddings_heart`. 
+Step1:  Users can run `./HinSAGE/train.py` to generate the node representation for lncRNA gene nodes , e.g. `lncRNA_embeddings_heart.csv`. 
 
 ### 2.4 Select optimal non-essential lncRNAs
 
