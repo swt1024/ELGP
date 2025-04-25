@@ -3,14 +3,14 @@ import os
 import re
 
 # Set the directory containing ensembl data
-ensembl_dir = "../../data/reference_lncRNA/mouse/bed/ensembl/"
+ensembl_dir = "../../reference_lncRNA/mouse/bed/ensembl/"
 
 
 inter_npinter = pd.read_csv('../../data/NPInter_LPI/mouse/correct_NPInter_LPI.csv')
 
 # Read NONCODE and LncBook BED files
-noncodev5_bed = pd.read_csv('../../data/reference_lncRNA/mouse/bed/NONCODEv5_mm10.lncRNAGene.bed', sep='\t', header=None, names=['chr', 'start', 'end', 'gene_id', 'score', 'strand'])
-noncodev6_bed = pd.read_csv('../../data/reference_lncRNA/mouse/bed/NONCODEv6_mm10.lncRNAGene.bed', sep='\t', header=None, names=['chr', 'start', 'end', 'gene_id', 'score', 'strand'])
+noncodev5_bed = pd.read_csv('../../reference_lncRNA/mouse/bed/NONCODEv5_mm10.lncRNAGene.bed', sep='\t', header=None, names=['chr', 'start', 'end', 'gene_id', 'score', 'strand'])
+noncodev6_bed = pd.read_csv('../../reference_lncRNA/mouse/bed/NONCODEv6_mm10.lncRNAGene.bed', sep='\t', header=None, names=['chr', 'start', 'end', 'gene_id', 'score', 'strand'])
 
 noncodev5_bed['gene_id'] = noncodev5_bed['gene_id'].str.split('.').str[0]
 noncodev6_bed['gene_id'] = noncodev6_bed['gene_id'].str.split('.').str[0]

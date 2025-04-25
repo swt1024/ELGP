@@ -5,10 +5,10 @@ import pandas as pd
 # Load the CSV files
 NPInter_inter = pd.read_csv("../../data/NPInter_LPI/human/correct_NPInter_LPI.csv")
 LncBook_inter = pd.read_csv("../../data/LncBook_LPI/LncBook_LPI.csv")
-mapping_file = pd.read_csv("gencode/mapped_lncRNA.txt", sep='\t', header=None, names=['lncbook_id', 'npinter_id'])  # Contains gene_id and symbol mappings
+mapping_file = pd.read_csv("mapped_lncRNA.txt", sep='\t', header=None, names=['lncbook_id', 'npinter_id'])  # Contains gene_id and symbol mappings
 
 # Load the BED files
-NPInter_Lnc = pd.read_csv("gencode/npinter_lnc_0based.bed", sep='\t', header=None, names=['chr', 'start', 'end', 'gene_id', 'symbol', 'strand', 'identifier'])
+NPInter_Lnc = pd.read_csv("npinter_lnc_0based.bed", sep='\t', header=None, names=['chr', 'start', 'end', 'gene_id', 'symbol', 'strand', 'identifier'])
 LncBook_Lnc = pd.read_csv("lncbook_lnc_0based.bed", sep='\t', header=None, names=['chr', 'start', 'end', 'gene_id', 'symbol', 'strand', 'identifier'])
 
 inter_cols = ['gene_id', 'symbol', 'tarName','tissueOrCell']
@@ -86,7 +86,7 @@ lnc = result_df[lnc_columns]
 lnc = lnc.drop_duplicates(subset=['lncRNA_ID'])
 
 # Save the lncRNA
-lnc.to_csv("../../data/LPI/human/gencode/lncRNA.csv", index=False)
+lnc.to_csv("../../data/LPI/human/lncRNA.csv", index=False)
 
 result_df['protein_ID'] = result_df['tarName'].apply(lambda x: 'p' + str(x))
 
@@ -94,9 +94,9 @@ pro_columns = ['protein_ID', 'tarName']
 protein = result_df[pro_columns].drop_duplicates()
 protein.columns = ['protein_ID', 'protein']
 # Save the protein
-protein.to_csv("../../data/LPI/human/gencode/protein.csv", index=False)
+protein.to_csv("../../data/LPI/human/protein.csv", index=False)
 
 result_df = result_df[['lncRNA_ID', 'protein_ID', 'tissueOrCell']]
 
 # Save the final result
-result_df.to_csv("../../data/LPI/human/gencode/LPI.csv", index=False)
+result_df.to_csv("../../data/LPI/human/LPI.csv", index=False)

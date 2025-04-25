@@ -1,17 +1,26 @@
 import pandas as pd
 import numpy as np
+import os
+import argparse
 from sklearn.model_selection import KFold, LeaveOneOut
 from sklearn.metrics import confusion_matrix, matthews_corrcoef, roc_curve, auc, precision_recall_curve
 from sklearn.svm import LinearSVC
 from sklearn.preprocessing import MinMaxScaler
-import os
 
-tissue = 'lung'
+# Set up command line arguments
+parser = argparse.ArgumentParser(description='Process species and tissue type.')
+parser.add_argument('species', type=str, help='The species to process (e.g., mouse, human)')
+parser.add_argument('tissue', type=str, help='The tissue type to process (e.g., heart, liver)')
+args = parser.parse_args()
+
+# Assign arguments to variables
+species = args.species
+tissue = args.tissue
 
 # File paths
-X_path = f'../../HinSAGE/mouse/lncRNA_embeddings_{tissue}.csv'
-esslnc_path = '../../data/benchMarking/mouse/ess_lpi.csv'
-nonesslnc_path = '../../data/benchMarking/mouse/noness_lpi.csv'
+X_path = f'../../HinSAGE/{species}/lncRNA_embeddings_{tissue}.csv'
+esslnc_path = f'../../data/benchmark/{species}/ess_lpi.csv'
+nonesslnc_path = f'../../data/benchmark/{species}/noness_lpi.csv'
 
 # Load data
 X = pd.read_csv(X_path, index_col=0, header=None)
@@ -33,7 +42,7 @@ X_all = np.vstack((X_positive, X_negative))
 ids_all = np.hstack((ids_positive, ids_negative))
 
 # Ensure the output directory for metrics exists
-save_path = f'svm_mouse_{tissue}_shuffled_performance.csv'
+save_path = f'svm_{species}_{tissue}_shuffled_performance.csv'
 
 # Create the CSV file and write the header only once
 if not os.path.exists(save_path):
@@ -41,19 +50,23 @@ if not os.path.exists(save_path):
     metrics_df = pd.DataFrame(columns=header)
     metrics_df.to_csv(save_path, mode='w', header=True, index=False)
 
-# Loop through shuffled datasets (1 to 1000)
+# Loop through shuffled datasets (0 to 1000)
 for x in range(0, 1001):
     shuffle_file = f"shuffled_{x}.csv"
     
     # Load the shuffled dataset and check if it has been processed before
-    shuffled_data = pd.read_csv(os.path.join('./mouse_shuffled', shuffle_file))
+    shuffled_data = pd.read_csv(os.path.join(f'./{species}_shuffled', shuffle_file))
 
     # Get shuffled labels
     shuffled_y_all = shuffled_data['Label'].values
 
-    # Initialize KFold
-    kf = KFold(n_splits=10, shuffle=True, random_state=42)
-    loo = LeaveOneOut()
+    # Initialize KFold and LeaveOneOut
+    if species == 'mouse':
+        cv = LeaveOneOut()
+        C = 10
+    else:
+        cv = KFold(n_splits=10, shuffle=True, random_state=42)
+        C = 100
 
     # Initialize lists to store true labels and decision scores for performance evaluation
     all_true_labels = []
@@ -62,7 +75,7 @@ for x in range(0, 1001):
     experiment_records = pd.DataFrame()
 
     # KFold cross-validation
-    for fold, (train_index, test_index) in enumerate(loo.split(X_all)):
+    for fold, (train_index, test_index) in enumerate(cv.split(X_all)):
         X_train, X_test = X_all[train_index], X_all[test_index]
         y_train, y_test = shuffled_y_all[train_index], shuffled_y_all[test_index]
         ids_train, ids_test = ids_all[train_index], ids_all[test_index]
@@ -73,8 +86,7 @@ for x in range(0, 1001):
         X_test_scaled = scaler.transform(X_test)
 
         # Train LinearSVC model
-        #svm = LinearSVC(C=100, dual=False)  #human
-        svm = LinearSVC(C=10, dual=False)  #mouse
+        svm = LinearSVC(C=C, dual=False)
         svm.fit(X_train_scaled, y_train)
 
         # Get decision scores and predictions
@@ -96,7 +108,6 @@ for x in range(0, 1001):
             }
         fold_df = pd.DataFrame(fold_data)
         experiment_records = pd.concat([experiment_records, fold_df], ignore_index=True)
-
 
     # Convert lists to arrays for performance evaluation
     all_true_labels = np.array(all_true_labels)
@@ -138,7 +149,7 @@ for x in range(0, 1001):
     metrics_df.to_csv(save_path, mode='a', header=False, index=False)
 
     # Save experiment records for the current shuffle iteration
-    experiment_records.to_csv(f'./experiment_details/mouse/svm/{tissue}/{tissue}_experiment_details_{x}.csv', index=False)
+    experiment_records.to_csv(f'./experiment_details/{species}/svm/{tissue}/{tissue}_experiment_details_{x}.csv', index=False)
 
     print(f"Processed and saved results for {shuffle_file}")
 

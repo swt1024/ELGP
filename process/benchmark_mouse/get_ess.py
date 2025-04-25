@@ -1,17 +1,7 @@
 import pandas as pd
 
-import pandas as pd
-
-ess_lnc = pd.read_csv("../../data/benchMarking/esslnc.csv")
-
-ess_lnc = ess_lnc[ess_lnc['Organism'] == 'Human']
-
-ess_lnc = ess_lnc[['Noncode_id','Lncbook_id','lib_id','gene_name','ensembl_id']]
-
-ess_lnc.to_csv("../../data/benchMarking/human/esslnc.csv", index=False)
-
-# Read the lncRNA data
-lncRNA = pd.read_csv("../../data/LPI/human/gencode/lncRNA.csv")
+lncRNA = pd.read_csv("../../data/LPI/mouse/lncRNA.csv")
+ess_lnc = pd.read_csv("../../data/benchmark/mouse/mouse_esslnc.csv")
 
 ess_lnc['Noncode_id'] = ess_lnc['Noncode_id'].str.split('.').str[0]
 
@@ -27,4 +17,4 @@ lncRNA['essential'] = lncRNA.apply(lambda row: is_essential(row['gene_id'], row[
 ess_lnc_lpi = lncRNA[lncRNA['essential'] == 1]
 ess_lnc_lpi = ess_lnc_lpi[['lncRNA_ID']]
 
-ess_lnc_lpi.to_csv('../../data/benchMarking/human/ess_lpi.csv', index=False)
+ess_lnc_lpi.to_csv('../../data/benchmark/mouse/ess_lpi.csv', index=False)

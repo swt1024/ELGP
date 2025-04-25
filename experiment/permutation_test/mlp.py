@@ -1,17 +1,26 @@
 import pandas as pd
 import numpy as np
+import argparse
 from sklearn.model_selection import KFold, LeaveOneOut
 from sklearn.metrics import confusion_matrix, matthews_corrcoef, roc_curve, auc, precision_recall_curve
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import MinMaxScaler
 import os
 
-tissue='brain'
+# Set up command line arguments
+parser = argparse.ArgumentParser(description='Process species and tissue type.')
+parser.add_argument('species', type=str, help='The species to process (e.g., mouse, human)')
+parser.add_argument('tissue', type=str, help='The tissue type to process (e.g., heart, liver)')
+args = parser.parse_args()
+
+# Assign arguments to variables
+species = args.species
+tissue = args.tissue
 
 # File paths
-X_path = f'../../HinSAGE/mouse/lncRNA_embeddings_{tissue}.csv'
-esslnc_path = '../../data/benchMarking/mouse/ess_lpi.csv'
-nonesslnc_path = '../../data/benchMarking/mouse/noness_lpi.csv'
+X_path = f'../../HinSAGE/{species}/lncRNA_embeddings_{tissue}.csv'
+esslnc_path = f'../../data/benchmark/{species}/ess_lpi.csv'
+nonesslnc_path = f'../../data/benchmark/{species}/noness_lpi.csv'
 
 # Load data
 X = pd.read_csv(X_path, index_col=0, header=None)
@@ -33,7 +42,7 @@ X_all = np.vstack((X_positive, X_negative))
 ids_all = np.hstack((ids_positive, ids_negative))
 
 # Ensure the output directory for metrics exists
-save_path = f'mlp_mouse_{tissue}_shuffled_performance.csv'
+save_path = f'mlp_{species}_{tissue}_shuffled_performance.csv'
 
 # Create the CSV file and write the header only once
 if not os.path.exists(save_path):
@@ -46,14 +55,18 @@ for x in range(1, 1001):
     shuffle_file = f"shuffled_{x}.csv"
     
     # Load the shuffled dataset and check if it has been processed before
-    shuffled_data = pd.read_csv(os.path.join('./mouse_shuffled', shuffle_file))
+    shuffled_data = pd.read_csv(os.path.join(f'./{species}_shuffled', shuffle_file))
 
     # Get shuffled labels
     shuffled_y_all = shuffled_data['Label'].values
 
-    # Initialize cross-validation
-    kf = KFold(n_splits=10, shuffle=True, random_state=42)
-    loo = LeaveOneOut()
+    # Initialize KFold and LeaveOneOut
+    if species == 'mouse':
+        cv = LeaveOneOut()
+        layer_size = (32,32) 
+    else:
+        cv = KFold(n_splits=10, shuffle=True, random_state=42)
+        layer_size = (128, 64)
 
     # Initialize lists to store true labels and scores for performance evaluation
     all_true_labels = []
@@ -63,7 +76,7 @@ for x in range(1, 1001):
     experiment_records = pd.DataFrame()
     
     # Cross-validation
-    for fold, (train_index, test_index) in enumerate(loo.split(X_all)):
+    for fold, (train_index, test_index) in enumerate(cv.split(X_all)):
         X_train, X_test = X_all[train_index], X_all[test_index]
         y_train, y_test = shuffled_y_all[train_index], shuffled_y_all[test_index]
         ids_train, ids_test = ids_all[train_index], ids_all[test_index]
@@ -75,13 +88,11 @@ for x in range(1, 1001):
 
         # Train MLP model
         mlp = MLPClassifier(
-			#hidden_layer_sizes=(256, 64),  #human
-            hidden_layer_sizes=(64,256), #mouse
+            hidden_layer_sizes=layer_size,
 			activation='relu',
 			alpha=1e-3,
 			learning_rate_init=0.01,
 			max_iter=500,
-			#early_stopping=True,
 			random_state=42
 		)
         mlp.fit(X_train_scaled, y_train)
@@ -148,7 +159,7 @@ for x in range(1, 1001):
     metrics_df.to_csv(save_path, mode='a', header=False, index=False)
 
     # Save experiment records for the current shuffle iteration
-    experiment_records.to_csv(f'./experiment_details/mouse/mlp/{tissue}/{tissue}_experiment_details_{x}.csv', index=False)
+    experiment_records.to_csv(f'./experiment_details/{species}/mlp/{tissue}/{tissue}_experiment_details_{x}.csv', index=False)
 
     print(f"Processed and saved results for {shuffle_file}")
 

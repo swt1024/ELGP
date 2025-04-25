@@ -4,8 +4,8 @@ import random
 import os
 
 # File paths
-esslnc_path = '../../data/benchMarking/mouse/ess_lpi.csv'
-nonesslnc_path = '../../data/benchMarking/mouse/noness_lpi.csv'
+esslnc_path = '../../data/benchmark/mouse/ess_lpi.csv'
+nonesslnc_path = '../../data/benchmark/mouse/noness_lpi.csv'
 
 # Load data
 esslnc = pd.read_csv(esslnc_path)
@@ -23,7 +23,7 @@ y_all = np.hstack((np.ones(len(ids_positive)), np.zeros(len(ids_negative))))
 ids_all = np.hstack((ids_positive, ids_negative))
 
 # Create directory to store shuffled datasets
-output_dir = './mouse_shuffled_0'
+output_dir = './mouse_shuffled'
 os.makedirs(output_dir, exist_ok=True)
 
 # Save the original data as shuffle_0.csv before shuffling

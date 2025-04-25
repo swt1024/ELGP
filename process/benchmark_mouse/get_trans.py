@@ -3,16 +3,14 @@ import os
 import re
 
 # Set the directory containing ensembl transcript data
-ensembl_dir = "../../data/reference_lncRNA/human/transcript/ensembl/"
+ensembl_dir = "../../reference_lncRNA/mouse/transcript/ensembl/"
 
 # Read LncBook and NONCODE transcript files
 cols = ['gene_id', 'transcript_id']
-lncbook_trans = pd.read_csv('../../data/reference_lncRNA/human/transcript/lncRNA_LncBookv2.0_GRCh38_trans.txt', sep='\t', header=None, names=cols)
-noncodev5_trans = pd.read_csv('../../data/reference_lncRNA/human/transcript/NONCODEv5_human_hg38_lncRNA_trans.txt', sep='\t', header=None, names=cols)
-noncodev6_trans = pd.read_csv('../../data/reference_lncRNA/human/transcript/NONCODEv6_human_hg38_lncRNA_trans.txt', sep='\t', header=None, names=cols)
+noncodev5_trans = pd.read_csv('../../reference_lncRNA/mouse/transcript/NONCODEv5_mouse_mm10_lncRNA_trans.txt', sep='\t', header=None, names=cols)
 
 # Read lncRNA ID data
-lncRNA = pd.read_csv('../../data/LPI/human/ensembl/lncRNA.csv')
+lncRNA = pd.read_csv('../../data/LPI/mouse/lncRNA.csv')
 lncRNA = lncRNA[['lncRNA_ID', 'identifier']]
 
 # Initialize remaining lncRNA list
@@ -27,24 +25,13 @@ def update_remained_lncRNA(df, matched_df):
 # Store results
 results = []
 
-# Get transcript by LncBook
-trans_lnc_lncbook = pd.merge(lncRNA, lncbook_trans, left_on='identifier', right_on='gene_id', how='inner')
-results.append(trans_lnc_lncbook)
-remained_lncRNA = update_remained_lncRNA(remained_lncRNA, trans_lnc_lncbook)
-
-# Get transcript by NONCODE (v6 and v5)
-trans_lnc_noncodev6 = pd.merge(remained_lncRNA, noncodev6_trans, left_on='identifier', right_on='gene_id', how='inner')
-results.append(trans_lnc_noncodev6)
-remained_lncRNA = update_remained_lncRNA(remained_lncRNA, trans_lnc_noncodev6)
-
 trans_lnc_noncodev5 = pd.merge(remained_lncRNA, noncodev5_trans, left_on='identifier', right_on='gene_id', how='inner')
 results.append(trans_lnc_noncodev5)
 remained_lncRNA = update_remained_lncRNA(remained_lncRNA, trans_lnc_noncodev5)
 
 # Extract version numbers and sort filenames in descending order
 def extract_version(filename):
-    match = re.search(r'GRCh38\.(\d+)_trans\.txt', filename)
-    #match = re.search(r"v(\d+)", filename) # ensembl
+    match = re.search(r'GRCm38\.(\d+)_trans\.txt', filename)
     return int(match.group(1)) if match else -1  # Extract version number, default to -1 if no match
 
 ensembl_files = [f for f in os.listdir(ensembl_dir) if f.endswith(".txt")]

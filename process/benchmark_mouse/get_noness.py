@@ -1,6 +1,6 @@
 import pandas as pd 
 
-ess_lnc_lpi = pd.read_csv("../../data/benchMarking/mouse/ess_lpi.csv")
+ess_lnc_lpi = pd.read_csv("../../data/benchmark/mouse/ess_lpi.csv")
 lnc_GIC = pd.read_csv("sorted_GIC_score.csv")
 
 annotated_lnc = pd.read_csv("../../annotate/mouse/valid_heart_annotation.csv")
@@ -14,4 +14,4 @@ noness_lnc_lpi = unlabel_lnc[:ess_counts]
 
 noness_lnc_lpi = noness_lnc_lpi[['lncRNA_ID']]
 
-noness_lnc_lpi.to_csv("../../data/benchMarking/mouse/noness_lpi.csv", index=False)
+noness_lnc_lpi.to_csv("../../data/benchmark/mouse/noness_lpi.csv", index=False)

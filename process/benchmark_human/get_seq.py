@@ -85,8 +85,8 @@ def write_filtered_mapping(filtered_gene_to_transcripts, output_mapping_file):
 
 # File paths and execution
 mapping_file = "lnc_trans.txt"
-base_directory = "../../data/sequence/mouse/"
-processed_ensembl_dir = "../../data/sequence/mouse/processed_ensembl/"
+base_directory = "../../reference_lncRNA/human/fasta/"
+processed_ensembl_dir = "../../reference_lncRNA/human/fasta/processed_ensembl/"
 
 def extract_version(filename):
     #match = re.search(r'v(\d+)', filename)
@@ -98,8 +98,9 @@ processed_ensembl_fa_files = [f for f in os.listdir(processed_ensembl_dir) if f.
 sorted_ensembl_files = [os.path.join(processed_ensembl_dir, f) for f in sorted(processed_ensembl_fa_files, key=extract_version, reverse=True)]
 
 fasta_files = [
-    os.path.join(base_directory, "NONCODEv6_mouse_processed.fa"),
-    os.path.join(base_directory, "NONCODEv5_mouse_processed.fa")
+    os.path.join(base_directory, "LncBookv2_OnlyLnc.fa"),
+    os.path.join(base_directory, "NONCODEv6_human_processed.fa"),
+    os.path.join(base_directory, "NONCODEv5_human_processed.fa")
 ] + sorted_ensembl_files  # Add dynamically found files
 
 output_fasta_file = "transcript_sequences.fasta"
