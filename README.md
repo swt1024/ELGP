@@ -47,16 +47,12 @@ ELGP/
 git clone https://github.com/swt1024/ELGP.git
 
 # Create and activate conda environment (recommended)
-conda create -n ELGP python=3.7
+conda create -n ELGP python==3.7
 conda activate ELGP
 
 # Install dependencies
-pip install torch
-pip install torch-geometric
-pip install pytorch-lightning
-pip install h5py cooler hic-straw
-pip install numpy pandas matplotlib scikit-learn
-pip install pyBigWig
+conda install -c bioconda bedtools
+pip install -r requirements.txt
 ```
 ---
 ## Workflow of ELGP
@@ -213,6 +209,7 @@ To generate the negative sample set for mouse, run the scripts in the `process/b
 | :-----: | :-: | :-------------: |
 |  Human  |     |     linear      |
 |  Mouse  | 10  |     linear      |
+
 The table above shows the parameters used by the SVM model under different datasets.
 For example, users can run the forth code cell in `svm.ipynb`, input `data/benchmark/human/ess_lpi.csv`, `data/benchmark/human/noness_lpi.csv` and `HinASGE/human/lncRNA_embeddings_heart`, and get  accuracy, precision and other 's performance indicators.
 Users can run the fifth code cell in `svm.ipynb`, input `data/benchmark/human/ess_lpi.csv`, `data/benchmark/human/noness_lpi.csv` and `HinASGE/human/lncRNA_embeddings_heart`, and get predicted results.
@@ -222,5 +219,6 @@ Users can run the fifth code cell in `svm.ipynb`, input `data/benchmark/human/es
 | :-----: | :---------------------------------------: |
 |  Human  |                                           |
 |  Mouse  |                  (32,32)                  |
+
 The table above shows the parameters used by the MLP model under different datasets.
 
