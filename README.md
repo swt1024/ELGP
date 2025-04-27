@@ -57,7 +57,7 @@ pip install -r requirements.txt
 ---
 ## Workflow of ELGP
 
-### 1. Data Collection and Preprocessing
+### 1. Data collection and preprocessing
 #### Step1: Download and preprocess the reference lncRNA gene-related data.
 
 1. Download the following files into the corresponding folders:
@@ -165,7 +165,7 @@ To merge interaction data from the NPInter and LncBook databases:
 2. Run `process/LPPI_mouse/getLPPI.py` to construct LPPI network，output `data/LPPI/mouse/LPPI.csv` and `data/LPPI/mouse/protein.csv`。
 3. Run the `correct_protein.py` script to correct the protein name, output `data/LPPI/mouse/LPPI_updated.csv` and `data/LPPI/mouse/protein_updated.csv`. The script uses the following files: 
 	- `right_protein.csv`: Contains erroneous protein names and their corresponding valid names. 
-### 3. Node Feature Annotation for the LPPI Network
+### 3. Node feature annotation for the LPPI network
 
  **human**
 1. Run the `annotate/human/lncRNA_feature_annotate.ipynb` notebook to annotate features for all lncRNA nodes in the human LPPI network.
@@ -181,8 +181,8 @@ Users can run `./HinSAGE/train.py` to generate the node representation for lncRN
 
 | dataset | The number of sampled neighboring nodes | The dimensions of the hidden layers |
 | ------- | :-------------------------------------: | :---------------------------------: |
-| Human   |                 （20,15）                 |              （64,256）               |
-| Mouse   |                 （10,15）                 |               （64,64）               |
+| Human   |                 (20,15)                 |              (64,256)               |
+| Mouse   |                 (10,15)                 |              (64,64)                |
 
 **Note:**  
 Users can run `./HinSAGE/tune.py` to generate node embeddings for tuning model parameters.  
@@ -207,7 +207,7 @@ To generate the negative sample set for mouse, run the scripts in the `process/b
 
 | dataset |  C  | kernel function |
 | :-----: | :-: | :-------------: |
-|  Human  |     |     linear      |
+|  Human  | 10  |     linear      |
 |  Mouse  | 10  |     linear      |
 
 The table above shows the parameters used by the SVM model under different datasets.
@@ -217,8 +217,9 @@ Users can run the fifth code cell in `svm.ipynb`, input `data/benchmark/human/es
 
 | dataset | The number of neurons in the hidden layer |
 | :-----: | :---------------------------------------: |
-|  Human  |                                           |
+|  Human  |                  (64,64)                  |
 |  Mouse  |                  (32,32)                  |
 
 The table above shows the parameters used by the MLP model under different datasets.
 
+The prediction results of SVM and MLP will be stored in the `results/human` and `results/mouse` directories. The `results` folder contains the prediction outcomes of SVM and MLP across different tissues. It also includes the intersection of the essential lncRNA genes predicted by the two classifiers for each tissue, as well as the union of essential lncRNA genes predicted across multiple tissues for each species. These results can be used for subsequent experimental analyses, including but not limited to the experiments in `experiment`.

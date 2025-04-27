@@ -66,7 +66,7 @@ for x in range(1, 1001):
         layer_size = (32,32) 
     else:
         cv = KFold(n_splits=10, shuffle=True, random_state=42)
-        layer_size = (128, 64)
+        layer_size = (64, 64)
 
     # Initialize lists to store true labels and scores for performance evaluation
     all_true_labels = []
@@ -162,6 +162,3 @@ for x in range(1, 1001):
     experiment_records.to_csv(f'./experiment_details/{species}/mlp/{tissue}/{tissue}_experiment_details_{x}.csv', index=False)
 
     print(f"Processed and saved results for {shuffle_file}")
-
-# Final message
-print("All files processed successfully.")

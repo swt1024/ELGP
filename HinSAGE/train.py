@@ -20,7 +20,7 @@ random.seed(SEED)
 np.random.seed(SEED)
 tf.random.set_seed(SEED)
 os.environ['PYTHONHASHSEED'] = str(SEED)
-os.environ['TF_DETERMINISTIC_OPS'] = '1'  # 强制确定性计算
+os.environ['TF_DETERMINISTIC_OPS'] = '1'  
 
 tf.config.experimental.enable_op_determinism()
 

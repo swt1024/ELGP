@@ -110,7 +110,7 @@ lncRNAs = lncRNAs.drop('lncRNA_ID', axis=1)
 scaler_lncRNAs = StandardScaler()
 lncRNAs_scaled = scaler_lncRNAs.fit_transform(lncRNAs)
 
-# 创建 StellarGraph 对象
+# create StellarGraph Object
 LPPI_graph = StellarGraph({"lncRNA": pd.DataFrame(lncRNAs_scaled, index=lncRNAs.index),
                         "protein": pd.DataFrame(proteins, index=proteins.index)},
                         LPPI)

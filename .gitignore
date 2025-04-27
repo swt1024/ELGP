@@ -2,26 +2,35 @@
 /shelf/
 /workspace.xml
 
-# 忽略所有 压缩文件
+# Ignore all compressed files
 *.zip
 *.gz
 *.rar
 *.7z
 
-# 忽略所有 数据文件
-*.txt
+# Ignore all data files
 *.bed
-*.csv
 *.gtf
 *.bigbed
 *.fasta
 *.svg
+*.fa
+*.fa.fai
+*.gaf
 
-# 忽略以下文件夹
+# Ignore the following folders
 PDF/
-data/
-omics/
-reference_lncRNA/
-results/
 .vscode/
 .idea/
+
+annotate/human/*.csv
+annotate/mouse/*.csv
+classifier/MLP/experiment_details
+classifier/SVM/experiment_details
+data/raw/*.csv
+data/raw/*.txt
+HinSAGE/human
+HinSAGE/mouse
+experiment/**/*.csv
+experiment/**/*.txt
+omics/protein/mouse/filtered_exp.csv

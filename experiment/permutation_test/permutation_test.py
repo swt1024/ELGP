@@ -18,9 +18,9 @@ def compute_p_value(obs_performance, random_performances):
 results = []
 
 for model_name in model_names:
-	for tissue in mouse_tissues:
+	for tissue in human_tissues:
 		# ------------------------ 1. Read CSV File ------------------------
-		file_path = f'{model_name}_mouse_{tissue}_shuffled_performance.csv'
+		file_path = f'{model_name}_human_{tissue}_shuffled_performance.csv'
 		df = pd.read_csv(file_path)
 
 		# ------------------------ 2. Extract Data ------------------------
@@ -42,6 +42,6 @@ for model_name in model_names:
 pval_df = pd.DataFrame(results)
 
 # Save to CSV
-pval_df.to_csv('mouse_p_values.csv', index=False)
+pval_df.to_csv('human_p_values.csv', index=False)
 
-print("P-values saved to mouse_p_values.csv")
+print("P-values saved to human_p_values.csv")

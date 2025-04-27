@@ -1,9 +1,9 @@
 import pandas as pd
 
 # === Configuration file paths ===
-mapping_path = "right_protein.csv"         # No header: old_symbol\tnew_symbol
-protein_path = "../../data/LPPI/mouse/protein.csv"         # symbol\tp+symbol
-lppi_path = "../../data/LPPI/mouse/LPPI.csv"               # Two columns, might mix lncRNA and protein
+mapping_path = "right_protein.csv"         
+protein_path = "../../data/LPPI/mouse/protein.csv"        
+lppi_path = "../../data/LPPI/mouse/LPPI.csv"               
 
 # === Read mapping table ===
 df_map = pd.read_csv(mapping_path, header=None, names=["old_symbol", "new_symbol"])
@@ -19,7 +19,7 @@ update_protein = df_protein[["NewSymbol", "NewProteinID"]]
 update_protein.columns = ['protein', 'protein_ID']
 update_protein = update_protein.drop_duplicates()
 update_protein.to_csv("../../data/LPPI/mouse/protein_updated.csv", index=False)
-print("✅ Saved: protein_updated.csv")
+print("Saved: protein_updated.csv")
 
 # === Process LPPI file ===
 df_lppi = pd.read_csv(lppi_path)
@@ -39,4 +39,4 @@ df_lppi["Node_j"] = df_lppi["Node_j"].apply(replace_protein_id)
 
 # Save the updated LPPI file
 df_lppi.to_csv("../../data/LPPI/mouse/LPPI_updated.csv", index=False)
-print("✅ Saved: LPPI_updated.csv (includes LPI + PPI)")
+print("Saved: LPPI_updated.csv (includes LPI + PPI)")
