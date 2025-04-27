@@ -177,7 +177,7 @@ To merge interaction data from the NPInter and LncBook databases:
 
 ### 4. Heterogeneous representation learning
 
-Users can run `./HinSAGE/train.py` to generate the node representation for lncRNA gene nodes , e.g. `HinASGE/human/lncRNA_embeddings_heart`.  The following are the optimal parameters used on the datasets in this study:
+Users can run `./HinSAGE/train.py` to generate the node representation for lncRNA gene nodes , e.g. `HinASGE/human/lncRNA_embeddings_heart.csv`.  The following are the optimal parameters used on the datasets in this study:
 
 | dataset | The number of sampled neighboring nodes | The dimensions of the hidden layers |
 | ------- | :-------------------------------------: | :---------------------------------: |
@@ -212,7 +212,7 @@ To generate the negative sample set for mouse, run the scripts in the `process/b
 
 The table above shows the parameters used by the SVM model under different datasets.
 For example, users can run the forth code cell in `svm.ipynb`, input `data/benchmark/human/ess_lpi.csv`, `data/benchmark/human/noness_lpi.csv` and `HinASGE/human/lncRNA_embeddings_heart`, and get  accuracy, precision and other 's performance indicators.
-Users can run the fifth code cell in `svm.ipynb`, input `data/benchmark/human/ess_lpi.csv`, `data/benchmark/human/noness_lpi.csv` and `HinASGE/human/lncRNA_embeddings_heart`, and get predicted results.
+Users can run the fifth code cell in `svm.ipynb`, input `data/benchmark/human/ess_lpi.csv`, `data/benchmark/human/noness_lpi.csv` and `HinASGE/human/lncRNA_embeddings_heart.csv`, and get predicted results.
 #### MLP model
 
 | dataset | The number of neurons in the hidden layer |
