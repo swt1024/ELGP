@@ -82,7 +82,7 @@ for x in range(0, 1001):
         y_train, y_test = shuffled_y_all[train_index], shuffled_y_all[test_index]
         ids_train, ids_test = ids_all[train_index], ids_all[test_index]
 
-        # Apply MinMaxScaler
+        # Apply StandardScaler
         scaler = StandardScaler()
         X_train_scaled = scaler.fit_transform(X_train)
         X_test_scaled = scaler.transform(X_test)

@@ -3,7 +3,7 @@ mkdir -p ./human
 mkdir -p ./mouse
 
 # Download conservation scores for human genome (hg38) from UCSC
-wget -O ./human/phastCons.bw http://hgdownload.cse.ucsc.edu/goldenPath/hg38/phastCons100way/hg38.phastCons100way.bw
+# wget -O ./human/phastCons.bw http://hgdownload.cse.ucsc.edu/goldenPath/hg38/phastCons100way/hg38.phastCons100way.bw
 wget -O ./human/phyloP.bw http://hgdownload.cse.ucsc.edu/goldenPath/hg38/phyloP100way/hg38.phyloP100way.bw
 
 # Download conservation scores for mouse genome (mm10) from UCSC
