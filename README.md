@@ -227,4 +227,4 @@ The table above shows the parameters used by the MLP model under different datas
 The prediction results of SVM and MLP will be stored in the `results/human` and `results/mouse` directories. The `results` folder contains the prediction outcomes of SVM and MLP across different tissues. It also includes the intersection of the essential lncRNA genes predicted by the two classifiers for each tissue, as well as the union of essential lncRNA genes predicted across multiple tissues for each species. These results can be used for subsequent experimental analyses, including but not limited to the experiments in `experiment`.
 
 ### Citation
-Shi Wan-Ting, Liu Ying-Dong, Gong Xiu-Jun, Du Pu-Feng. ELE: Estimating tissue-specific lncRNA gene essentiality using graph neural networks[J]. (submitted).
+Shi Wan-Ting, Liu Ying-Dong, Gong Xiu-Jun, Du Pu-Feng. ELE: Estimating tissue-specific lncRNA gene essentiality using graph neural networks[J]. (revision).
