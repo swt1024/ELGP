@@ -1,0 +1,35 @@
+{
+  "SPECIE": "human",
+  "N_all": 35332,
+  "P_all": 1372,
+  "N_all_neg": 1372,
+  "U_all": 32588,
+  "PN_size": 2744,
+  "PN_P": 1372,
+  "PN_N": 1372,
+  "Train": "PNU (P+N+U), with fold-wise PN-test exclusion to avoid leakage",
+  "pi": 0.1,
+  "gamma": 0.5,
+  "hidden_dims": [
+    128,
+    64
+  ],
+  "lr": 0.005,
+  "weight_decay": 0.001,
+  "epochs": 200,
+  "batch_size": 512,
+  "OOF_on_PN": {
+    "ROC_AUC": 0.9032684085712586,
+    "PR_AUC": 0.9002807873554085,
+    "threadhold_metric": {
+      "threshold": 0.5,
+      "Sensitivity": 0.6173469387755102,
+      "Specificity": 0.9373177842565598,
+      "Accuracy": 0.777332361516035,
+      "PPV": 0.9078242229367631,
+      "F1": 0.7349240780911063,
+      "MCC": 0.5854429893857789,
+      "P": 933
+    }
+  }
+}
