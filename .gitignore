@@ -25,7 +25,8 @@
 # Ignore the following folders
 .vscode/
 .idea/
-dalunwen/
+dissertation/
+PNU_enhance/
 
 annotate/human/*.csv
 annotate/mouse/*.csv
